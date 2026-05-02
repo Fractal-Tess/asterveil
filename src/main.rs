@@ -561,6 +561,11 @@ impl App {
 }
 
 fn main() -> Result<()> {
+    if std::env::args().any(|a| a == "--version" || a == "-V") {
+        println!("{} {}", APP_NAME, env!("CARGO_PKG_VERSION"));
+        return Ok(());
+    }
+
     let display = std::env::var("DISPLAY").unwrap_or_else(|_| ":0".to_string());
     let mut app = App::new(display);
     app.refresh().context("initial refresh failed")?;
