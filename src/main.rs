@@ -598,10 +598,11 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<Stdout>>, app: &mut App) -> 
             app.handle_key(key)?;
         }
 
-        if app.last_refresh.elapsed() >= REFRESH_INTERVAL && app.overlay.is_none() {
-            if let Err(err) = app.refresh() {
-                app.push_message(format!("Refresh failed: {err:#}"));
-            }
+        if app.last_refresh.elapsed() >= REFRESH_INTERVAL
+            && app.overlay.is_none()
+            && let Err(err) = app.refresh()
+        {
+            app.push_message(format!("Refresh failed: {err:#}"));
         }
     }
 }
@@ -730,11 +731,7 @@ fn draw_gpu_cards(frame: &mut Frame<'_>, area: Rect, app: &App) {
     {
         let is_cursor = i == app.cursor;
         let is_selected = app.selected.contains(&i);
-        let border_style = if is_cursor && is_selected {
-            Style::default()
-                .fg(Color::LightCyan)
-                .add_modifier(Modifier::BOLD)
-        } else if is_cursor {
+        let border_style = if is_cursor {
             Style::default()
                 .fg(Color::LightCyan)
                 .add_modifier(Modifier::BOLD)
@@ -1333,45 +1330,8 @@ mod tests {
     }
 
     #[test]
-    fn toggles_selection_state() {
-        let mut selected = BTreeSet::new();
-        assert!(toggle_index(&mut selected, 1));
-        assert!(selected.contains(&1));
-        assert!(!toggle_index(&mut selected, 1));
-        assert!(!selected.contains(&1));
-    }
-
-    #[test]
-    fn uses_selected_targets_when_present() {
-        let indices = target_indices(2, &BTreeSet::from([0usize, 3usize]));
-        assert_eq!(indices, vec![0, 3]);
-    }
-
-    #[test]
-    fn falls_back_to_cursor_when_no_selection() {
-        let indices = target_indices(2, &BTreeSet::new());
-        assert_eq!(indices, vec![2]);
-    }
-
-    #[test]
     fn formats_vram_summary_in_gib() {
         assert_eq!(format_vram_summary("18432", "24576"), "18.0/24.0 GiB (75%)");
     }
 }
 
-fn toggle_index(selected: &mut BTreeSet<usize>, index: usize) -> bool {
-    if !selected.insert(index) {
-        selected.remove(&index);
-        false
-    } else {
-        true
-    }
-}
-
-fn target_indices(cursor: usize, selected: &BTreeSet<usize>) -> Vec<usize> {
-    if selected.is_empty() {
-        vec![cursor]
-    } else {
-        selected.iter().copied().collect()
-    }
-}

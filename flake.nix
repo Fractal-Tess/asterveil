@@ -45,11 +45,11 @@
                 || base == ".cache"
               );
           };
-          cargoHash = "sha256-s1Gospnpe4LtrZzkBcL1J6+M0x0nK2kecW2WGsQJPe8=";
+          cargoHash = "sha256-0je8iZEBmU/JX16gM5WbmonISnwV3PZ+soDIkc4RySY=";
 
           meta = with lib; {
             description = "A ratatui-based NVIDIA GPU control TUI";
-            homepage = "https://example.invalid/asterveil";
+            homepage = "https://github.com/Fractal-Tess/asterveil";
             license = licenses.mit;
             mainProgram = "asterveil";
             platforms = platforms.linux;
