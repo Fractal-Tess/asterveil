@@ -1,4 +1,4 @@
-![asterveil banner](https://capsule-render.vercel.app/api?type=waving&color=0:0f172a,100:06b6d4&height=220&section=header&text=asterveil&fontSize=46&fontColor=ffffff&desc=NVIDIA%20GPU%20Power%20%26%20Fan%20Control%20TUI&descSize=18&descAlignY=62)
+![asterveil banner](https://capsule-render.vercel.app/api?type=waving&color=0:0f172a,100:06b6d4&height=220&section=header&text=asterveil&fontSize=46&fontColor=ffffff&desc=NVIDIA%20GPU%20Power%20and%20Fan%20Control%20TUI&descSize=18&descAlignY=62)
 
 # asterveil
 
